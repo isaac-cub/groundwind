@@ -316,10 +316,12 @@
 
     .hero-lead {
       display: grid; grid-template-columns: 1.32fr .68fr;
-      gap: clamp(32px, 5vw, 76px); align-items: end;
+      gap: clamp(32px, 5vw, 76px); align-items: center;
       margin-bottom: clamp(44px, 6vw, 76px);
     }
-    .hero-aside { display: flex; flex-direction: column; gap: 30px; padding-bottom: 6px; }
+    .hero-lead-main { display: flex; flex-direction: column; }
+    .hero-lead-main .hero-actions { margin-top: clamp(28px, 3vw, 42px); }
+    .hero-aside { display: flex; flex-direction: column; gap: 30px; }
     .hero-sub {
       max-width: 46ch; color: var(--ink-soft);
       font-size: 1.02rem; line-height: 1.85;
@@ -566,12 +568,12 @@
     /* ---------- founder (dark) ---------- */
     #founder { background: var(--forest); color: var(--cream); padding: clamp(90px, 12vw, 150px) 0; }
     .founder-grid {
-      display: grid; grid-template-columns: minmax(250px, 320px) 1fr;
-      gap: clamp(40px, 7vw, 96px); align-items: start;
+      display: grid; grid-template-columns: minmax(210px, 264px) 1fr;
+      gap: clamp(40px, 7vw, 88px); align-items: start;
     }
     .founder-media { position: relative; }
     .founder-media::before {
-      content: ""; position: absolute; inset: 22px -22px -22px 22px;
+      content: ""; position: absolute; inset: 15px -15px -15px 15px;
       border: 1px solid var(--bronze-soft); z-index: 0; border-radius: 2px;
     }
     .founder-photo { position: relative; z-index: 1; overflow: hidden; border-radius: 2px; }
@@ -715,7 +717,7 @@
       .portfolio-row { grid-template-columns: 1fr; gap: 30px; }
       .portfolio-row:nth-child(even) .portfolio-media { order: 0; }
       .founder-grid { grid-template-columns: 1fr; }
-      .founder-media { max-width: 320px; }
+      .founder-media { max-width: 264px; }
       .contact-grid { grid-template-columns: 1fr; }
       .hero-stage .frame { aspect-ratio: 16 / 9; }
     }
@@ -770,21 +772,18 @@
     <!-- ============ HERO ============ -->
     <section id="hero">
       <div class="container">
-        <div class="hero-top reveal">
-          <span class="label">Holding de inversión</span>
-          <span class="hero-coords">Palma de Mallorca <span>·</span> 39.57° N — 2.65° E <span>·</span> MMXXVI</span>
-        </div>
-
         <div class="hero-lead">
-          <h1 class="hero-title split" id="hero-title">Invertimos en las empresas que definirán el <em>futuro del bienestar humano</em></h1>
-          <div class="hero-aside">
-            <p class="hero-sub reveal" data-delay="2">
-              Ground Wind Holding es una sociedad holding de inversión con base en Palma de Mallorca, creada para identificar, financiar y acompañar estratégicamente a compañías del ámbito del fitness, el bienestar, la salud y el desarrollo humano con capacidad real de crecimiento sostenido y relevancia de mercado.
-            </p>
+          <div class="hero-lead-main">
+            <h1 class="hero-title split" id="hero-title">Invertimos en las empresas que definirán el <em>futuro del bienestar humano</em></h1>
             <div class="hero-actions reveal" data-delay="3">
               <a href="#contact" class="btn btn-solid">Presenta tu proyecto <span class="arr" aria-hidden="true">→</span></a>
               <a href="#about" class="btn btn-line">Conoce el holding</a>
             </div>
+          </div>
+          <div class="hero-aside">
+            <p class="hero-sub reveal" data-delay="2">
+              Ground Wind Holding es una sociedad holding de inversión con base en Palma de Mallorca, creada para identificar, financiar y acompañar estratégicamente a compañías del ámbito del fitness, el bienestar, la salud y el desarrollo humano con capacidad real de crecimiento sostenido y relevancia de mercado.
+            </p>
           </div>
         </div>
       </div>
@@ -806,17 +805,6 @@
         </div>
       </div>
     </section>
-
-    <!-- ============ LOGO STRIP ============ -->
-    <div class="strip">
-      <div class="container strip-inner reveal">
-        <span class="label strip-label">Portfolio fundacional</span>
-        <div class="strip-logos">
-          <img src="assets/zumba-logo.png" alt="Zumba" width="238" height="211" />
-          <img src="assets/mindvalley-logo.png" alt="Mindvalley" width="600" height="600" />
-        </div>
-      </div>
-    </div>
 
     <!-- ============ ABOUT ============ -->
     <section id="about">
@@ -1105,6 +1093,7 @@
           <p>Holding de inversión especializado en compañías del bienestar, la salud y el desarrollo humano.</p>
         </div>
         <div class="footer-meta">
+          <a href="mailto:info@groundwind.eu">info@groundwind.eu</a>
           <a href="#contact">Contacto</a>
           <a href="https://www.groundwind.eu">www.groundwind.eu</a>
           <span>Palma de Mallorca · España</span>
@@ -1114,6 +1103,7 @@
         <span>© 2026 Ground Wind Holding S.L. · Todos los derechos reservados.</span>
         <nav class="footer-legal" aria-label="Enlaces legales">
           <a href="#">Aviso legal</a>
+          <a href="#">Términos y condiciones</a>
           <a href="#">Política de privacidad</a>
           <a href="#">Política de cookies</a>
         </nav>
@@ -1149,14 +1139,10 @@
       var menuBtn = document.getElementById('menu-btn');
       var menuOverlay = document.getElementById('menu-overlay');
 
-      /* --- nav: shrink + hide on scroll down, show on up --- */
-      var lastY = window.scrollY || window.pageYOffset || 0;
+      /* --- nav: shrink on scroll, always visible --- */
       var onScroll = function () {
         var y = window.scrollY || window.pageYOffset;
         nav.classList.toggle('scrolled', y > 30);
-        if (y > 400 && y > lastY + 4) nav.classList.add('hidden');
-        else if (y < lastY - 4 || y < 400) nav.classList.remove('hidden');
-        lastY = y;
       };
       onScroll();
       window.addEventListener('scroll', onScroll, { passive: true });
